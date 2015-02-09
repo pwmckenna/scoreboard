@@ -47,6 +47,7 @@ window.ScoreboardEditable = React.createClass({
     },
     componentWillMount: function () {
         this.props.firebaseRef.child('name').on('value', function (snapshot) {
+            document.title = snapshot.val();
             this.setState({
                 name: snapshot.val()
             });
