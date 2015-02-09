@@ -41,16 +41,6 @@ window.Scoreboard = React.createClass({
     componentWillUnmount: function () {
         this.props.firebaseRef.off();
     },
-    onShare: function () {
-        FB.ui({
-            method: 'share',
-            href: window.location.origin + this.makeHref('scoreboard', {
-                id: this.props.firebaseRef.key()
-            })
-        }, function (response) {
-            console.log(response);
-        });
-    },
     render: function () {
         return (
             <div>
@@ -71,10 +61,11 @@ window.Scoreboard = React.createClass({
                     verticalAlign: 'center',
                     fontSize: '10em'
                 }}>
-                    <ReactBootstrap.Glyphicon
-                        glyph='share'
-                        title='Spread word of your impending victory throughout the land!'
-                        onClick={this.onShare} />
+                    <FacebookShare
+                        href={window.location.origin + this.makeHref('scoreboard', {
+                            id: this.props.firebaseRef.key()
+                        })}
+                        title='Spread word of your impending victory throughout the land!' />
                 </ReactBootstrap.Row>
             </div>
         );
