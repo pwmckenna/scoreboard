@@ -2,20 +2,14 @@
 var React = require('react');
 var ReactRouter = require('react-router');
 var ReactBootstrap = require('react-bootstrap');
+var Firebase = require('firebase');
+var q = require('q');
 
-var FacebookShare = require('./FacebookShare.js');
+var FacebookShare = require('./FacebookShare.jsx');
+var Player = require('./Player.jsx');
 
 var Scoreboard = React.createClass({
-    mixins: [ReactRouter.Navigation],
-    statics: {
-        fetchData: function (params) {
-            return new Promise(function (resolve, reject) {
-                resolve({
-                    firebaseRef: new Firebase('https://shareable-scoreboard.firebaseio.com/scoreboards/' + params.id)
-                });
-            });
-        }
-    },
+    mixins: [ReactRouter.Navigation, ReactRouter.State],
     getInitialState: function () {
         return {
             players: {},
@@ -23,6 +17,7 @@ var Scoreboard = React.createClass({
         };
     },
     componentWillMount: function () {
+        this.props.firebaseRef = new Firebase('https://shareable-scoreboard.firebaseio.com/scoreboards/' + this.getParams().id);
         this.props.firebaseRef.child('name').on('value', function (snapshot) {
             this.setState({
                 name: snapshot.val()
@@ -67,7 +62,7 @@ var Scoreboard = React.createClass({
                     fontSize: '10em'
                 }}>
                     <FacebookShare
-                        href={window.location.origin + this.makeHref('scoreboard', {
+                        href={this.makeHref('scoreboard', {
                             id: this.props.firebaseRef.key()
                         })}
                         title='Spread word of your impending victory throughout the land!' />

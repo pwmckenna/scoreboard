@@ -6,11 +6,11 @@ var Firebase = require('firebase');
 var q = require('q');
 var _ = require('lodash');
 
-var COLORS = require('./colors.js');
+var COLORS = require('./colors');
 
-var ContentEditable = require('./ContentEditable.js');
-var FacebookShare = require('./FacebookShare.js');
-var PlayerEditable = require('./PlayerEditable.js');
+var ContentEditable = require('./ContentEditable.jsx');
+var FacebookShare = require('./FacebookShare.jsx');
+var PlayerEditable = require('./PlayerEditable.jsx');
 
 var ScoreboardEditable = React.createClass({
     mixins: [ReactRouter.Navigation],
@@ -54,7 +54,6 @@ var ScoreboardEditable = React.createClass({
     },
     componentWillMount: function () {
         this.props.firebaseRef.child('name').on('value', function (snapshot) {
-            document.title = snapshot.val();
             this.setState({
                 name: snapshot.val()
             });
@@ -112,7 +111,7 @@ var ScoreboardEditable = React.createClass({
                         title='Another brave soul?'
                         onClick={this.onAdd} />
                     <FacebookShare
-                        href={window.location.origin + this.makeHref('scoreboard', {
+                        href={this.makeHref('scoreboard', {
                             id: this.props.firebaseRef.key()
                         })}
                         title='Spread word of your impending victory throughout the land!' />

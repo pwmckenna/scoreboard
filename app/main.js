@@ -3,19 +3,9 @@ var React = require('react');
 var ReactRouter = require('react-router');
 var q = require('q');
 var _ = require('lodash');
+var Firebase = require('firebase');
 
-var App = require('./App.js');
-var ScoreboardEditable = require('./ScoreboardEditable.js');
-var Scoreboard = require('./Scoreboard.js');
-var NotFound = require('./NotFound.js');
-
-var routes = (
-    <ReactRouter.Route handler={App}>
-        <ReactRouter.Route name='edit' path='/' handler={ScoreboardEditable} />
-        <ReactRouter.Route name='scoreboard' path='/scoreboard/:id' handler={Scoreboard} />
-        <ReactRouter.NotFoundRoute handler={NotFound} />
-    </ReactRouter.Route>
-);
+var routes = require('./routes.jsx');
 
 ReactRouter.run(routes, ReactRouter.HistoryLocation, function (Handler, state) {
     console.log(state.routes);

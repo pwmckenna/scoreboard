@@ -2,7 +2,7 @@
 var React = require('react');
 var ReactBootstrap = require('react-bootstrap');
 
-var ContentEditable = require('./ContentEditable.js');
+var ContentEditable = require('./ContentEditable.jsx');
 
 var PlayerEditable = React.createClass({
     getInitialState: function () {
