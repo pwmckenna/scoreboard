@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
+var React = require('react');
 
-window.ContentEditable = React.createClass({
+var ContentEditable = React.createClass({
     render: function () {
         return (
             <span onInput={this.handleInput} onBlur={this.handleChange} contentEditable="true" dangerouslySetInnerHTML={{__html: this.props.html}}>
@@ -22,3 +23,5 @@ window.ContentEditable = React.createClass({
         this.lastHtml = html;
     }
 });
+
+module.exports = ContentEditable;

@@ -1,6 +1,8 @@
 /** @jsx React.DOM */
+var React = require('react');
+var ReactBootstrap = require('react-bootstrap');
 
-window.Player = React.createClass({
+var Player = React.createClass({
     getInitialState: function () {
         return {
             name: '',
@@ -45,3 +47,5 @@ window.Player = React.createClass({
         </div>
     }
 });
+
+module.exports = Player;

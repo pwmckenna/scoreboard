@@ -1,42 +1,49 @@
 /** @jsx React.DOM */
+var React = require('react');
+var ReactRouter = require('react-router');
+var ReactBootstrap = require('react-bootstrap');
+var Firebase = require('firebase');
+var q = require('q');
+var _ = require('lodash');
 
-window.ScoreboardEditable = React.createClass({
+var COLORS = require('./colors.js');
+
+var ContentEditable = require('./ContentEditable.js');
+var FacebookShare = require('./FacebookShare.js');
+var PlayerEditable = require('./PlayerEditable.js');
+
+var ScoreboardEditable = React.createClass({
     mixins: [ReactRouter.Navigation],
     statics: {
         fetchData: function (params) {
-            return new Promise(function (resolve, reject) {
-                var scoreboardsFirebaseRef = new Firebase('https://shareable-scoreboard.firebaseio.com/scoreboards');
-                var authData = scoreboardsFirebaseRef.getAuth();
-                if (authData) {
-                    resolve({
-                        firebaseRef: scoreboardsFirebaseRef.child(authData.uid)
+            var scoreboardsFirebaseRef = new Firebase('https://shareable-scoreboard.firebaseio.com/scoreboards');
+            var authData = scoreboardsFirebaseRef.getAuth();
+            if (authData) {
+                return q.resolve({
+                    firebaseRef: scoreboardsFirebaseRef.child(authData.uid)
+                });
+            } else {
+                var defer = q.defer();
+                scoreboardsFirebaseRef.authAnonymously(defer.makeNodeResolver());
+                return defer.promise.then(function (authData) {
+                    var firebaseRef = scoreboardsFirebaseRef.child(authData.uid);
+                    firebaseRef.child('players').push({
+                        name: 'editable player name',
+                        color: _.sample(COLORS),
+                        score: 0
                     });
-                } else {
-                    scoreboardsFirebaseRef.authAnonymously(function (error, authData) {
-                        if (error) {
-                            console.warn(error);
-                            reject(error);
-                        } else {
-                            var firebaseRef = scoreboardsFirebaseRef.child(authData.uid);
-                            firebaseRef.child('players').push({
-                                name: 'editable player name',
-                                color: _.sample(COLORS),
-                                score: 0
-                            });
-                            firebaseRef.child('players').push({
-                                name: 'editable player name',
-                                color: _.sample(COLORS),
-                                score: 0
-                            });
-                            firebaseRef.child('name').set('editable game name');
+                    firebaseRef.child('players').push({
+                        name: 'editable player name',
+                        color: _.sample(COLORS),
+                        score: 0
+                    });
+                    firebaseRef.child('name').set('editable game name');
 
-                            resolve({
-                                firebaseRef: firebaseRef
-                            });
-                        }
+                    return q.resolve({
+                        firebaseRef: firebaseRef
                     });
-                }
-            });
+                });
+            }
         }
     },
     getInitialState: function () {
@@ -114,3 +121,5 @@ window.ScoreboardEditable = React.createClass({
         );
     }
 });
+
+module.exports = ScoreboardEditable;

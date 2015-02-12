@@ -1,4 +1,4 @@
-window.COLORS = [
+module.exports = [
     '#1abc9c',
     '#2ecc71',
     '#3498db',

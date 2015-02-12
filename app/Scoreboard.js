@@ -1,7 +1,12 @@
 /** @jsx React.DOM */
+var React = require('react');
+var ReactRouter = require('react-router');
+var ReactBootstrap = require('react-bootstrap');
 
-window.Scoreboard = React.createClass({
-    mixins: [ReactRouter.Navigation, ReactRouter.State],
+var FacebookShare = require('./FacebookShare.js');
+
+var Scoreboard = React.createClass({
+    mixins: [ReactRouter.Navigation],
     statics: {
         fetchData: function (params) {
             return new Promise(function (resolve, reject) {
@@ -71,3 +76,5 @@ window.Scoreboard = React.createClass({
         );
     }
 });
+
+module.exports = Scoreboard;

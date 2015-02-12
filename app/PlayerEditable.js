@@ -1,6 +1,10 @@
 /** @jsx React.DOM */
+var React = require('react');
+var ReactBootstrap = require('react-bootstrap');
 
-window.PlayerEditable = React.createClass({
+var ContentEditable = require('./ContentEditable.js');
+
+var PlayerEditable = React.createClass({
     getInitialState: function () {
         return {
             name: '',
@@ -88,3 +92,5 @@ window.PlayerEditable = React.createClass({
         </div>
     }
 });
+
+module.exports = PlayerEditable;

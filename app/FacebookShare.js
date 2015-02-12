@@ -1,5 +1,10 @@
-window.FacebookShare = React.createClass({
+/** @jsx React.DOM */
+var React = require('react');
+var ReactBootstrap = require('react-bootstrap');
+
+var FacebookShare = React.createClass({
     onShare: function () {
+        console.log(this.props.href);
         FB.ui({
             method: 'share',
             href: this.props.href
@@ -15,3 +20,5 @@ window.FacebookShare = React.createClass({
         )
     }
 });
+
+module.exports = FacebookShare;
