@@ -32,7 +32,6 @@ app.use(function (req, res, next) {
     }).fail(function () {
         return '';
     }).then(function (content) {
-        console.log('content', content);
         res.render('index', {
             content: content
         });

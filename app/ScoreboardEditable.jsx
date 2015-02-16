@@ -55,7 +55,6 @@ var ScoreboardEditable = React.createClass({
         this.props.firebase.child('name').set(e.target.value);
     },
     render: function () {
-        console.log('render');
         return (
             <div>
                 <ReactBootstrap.Row style={{
