@@ -4,9 +4,10 @@ var ReactBootstrap = require('react-bootstrap');
 
 var FacebookShare = React.createClass({
     onShare: function () {
+        console.log('onShare', location.origin + this.props.href);
         FB.ui({
             method: 'share',
-            href: location.origin + this.props.href
+            href: href
         });
     },
 
