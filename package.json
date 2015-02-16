@@ -5,7 +5,7 @@
   "author": "Patrick Williams",
   "license": "ISC",
   "scripts": {
-    "start": "PORT=3000 node ./server"
+    "start": "node ./server"
   },
   "devDependencies": {
     "browserify": "^6.2.0",
