@@ -1,8 +1,8 @@
 {
-  "name": "react-app-boilerplate",
-  "version": "2.2.2",
-  "description": "React application boilerplate",
-  "author": "Christian Alfoni",
+  "name": "TallyMaster",
+  "version": "0.0.1",
+  "description": "React application scoreboard",
+  "author": "Patrick Williams",
   "license": "ISC",
   "scripts": {
     "start": "PORT=3000 node ./server"
