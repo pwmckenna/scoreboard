@@ -14,32 +14,45 @@ var PlayerEditable = require('./PlayerEditable.jsx');
 
 var ScoreboardEditable = React.createClass({
     mixins: [ReactRouter.Navigation, ReactRouter.State],
+    statics: {
+        fetchData: function (params) {
+            var firebase = new Firebase('https://shareable-scoreboard.firebaseio.com/scoreboards/' + params.id);
+
+            var defer = q.defer();
+            firebase.on('value', function (snapshot) {
+                defer.resolve(snapshot.val());
+            });
+            return defer.promise.then(function (initialState) {
+                return {
+                    firebase: firebase,
+                    initialState: initialState
+                };
+            });
+        }
+    },
     getFirebase: function () {
         return new Firebase('https://shareable-scoreboard.firebaseio.com/scoreboards/' + this.getParams().id);
     },
     getInitialState: function () {
-        return {
-            players: {},
-            name: ''
-        };
+        return this.props.initialState;
     },
     componentDidMount: function () {
-        this.getFirebase().on('value', function (snapshot) {
+        this.props.firebase.on('value', function (snapshot) {
             this.setState(snapshot.val() || {});
         }.bind(this));
     },
     componentWillUnmount: function () {
-        this.getFirebase().off();
+        this.props.firebase.off();
     },
     onAdd: function () {
-        this.getFirebase().child('players').push({
+        this.props.firebase.child('players').push({
             name: 'editable player name',
             color: _.sample(COLORS),
-            score: 0
+            count: 0
         });
     },
     onChangeName: function (e) {
-        this.getFirebase().child('name').set(e.target.value);
+        this.props.firebase.child('name').set(e.target.value);
     },
     render: function () {
         console.log('render');
@@ -56,23 +69,23 @@ var ScoreboardEditable = React.createClass({
                 {Object.keys(this.state.players).map(function (key) {
                     var player = this.state.players[key];
                     var onIncrement = function () {
-                        this.getFirebase().child('players').child(key).child('count').set(this.state.players[key].count + 1);
+                        this.props.firebase.child('players').child(key).child('count').set(this.state.players[key].count + 1);
                     }.bind(this);
                     var onDecrement = function () {
-                        this.getFirebase().child('players').child(key).child('count').set(this.state.players[key].count - 1);
+                        this.props.firebase.child('players').child(key).child('count').set(this.state.players[key].count - 1);
                     }.bind(this);
                     var onRefresh = function () {
                         if (window.confirm('I shall strip ' + this.state.name + ' of everything for you. Points, honor, dignity...')) {
-                            this.getFirebase().child('players').child(key).child('count').set(0);
+                            this.props.firebase.child('players').child(key).child('count').set(0);
                         }
                     }.bind(this);
                     var onRemove = function () {
                         if (window.confirm('I shall smote ' + this.state.name + ' on your command.')) {
-                            this.getFirebase().child('players').child(key).remove();
+                            this.props.firebase.child('players').child(key).remove();
                         }
                     }.bind(this);
                     var onChangeName = function (e) {
-                        this.getFirebase().child('players').child(key).child('name').set(e.target.value);
+                        this.props.firebase.child('players').child(key).child('name').set(e.target.value);
                     }.bind(this);
 
                     return <PlayerEditable
