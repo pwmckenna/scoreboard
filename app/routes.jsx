@@ -6,11 +6,13 @@ var App = require('./App.jsx');
 var ScoreboardEditable = require('./ScoreboardEditable.jsx');
 var Scoreboard = require('./Scoreboard.jsx');
 var NotFound = require('./NotFound.jsx');
+var EditRedirect = require('./EditRedirect.jsx');
 
 module.exports = (
     <ReactRouter.Route handler={App}>
-        <ReactRouter.Route name='edit' path='/' handler={ScoreboardEditable} />
-        <ReactRouter.Route name='scoreboard' path='/scoreboard/:id' handler={Scoreboard} />
+        <ReactRouter.Route path='/' handler={EditRedirect} />
+        <ReactRouter.Route name='scoreboard' path='/scoreboards/:id' handler={Scoreboard} />
+        <ReactRouter.Route name='edit' path='/scoreboards/:id/edit' handler={ScoreboardEditable} />
         <ReactRouter.NotFoundRoute handler={NotFound} />
     </ReactRouter.Route>
 );

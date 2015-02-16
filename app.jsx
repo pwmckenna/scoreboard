@@ -24,7 +24,7 @@ app.use(function (req, res, next) {
         return defer.promise;
     }).spread(function (Handler, state) {
         return q.all(state.routes.map(function (route) {
-            return route.handler.fetchData ? route.handler.fetchData() : {};
+            return route.handler.fetchData ? route.handler.fetchData(state.params) : {};
         })).then(function (data) {
             var props = _.extend.apply(void 0, [{}].concat(data));
             return React.renderToString(<Handler {...props} />);

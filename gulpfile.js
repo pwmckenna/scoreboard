@@ -154,7 +154,7 @@ var DEBUG_PORT = 5858;
 gulp.task('default', function () {
     browserifyTask({
         development: true,
-        src: './app/main.js',
+        src: './app/main.jsx',
         dest: './build'
     });
     
@@ -170,7 +170,7 @@ gulp.task('default', function () {
         env: {
             PORT: 3000
         },
-        nodeArgs: ['--debug-brk=' + DEBUG_PORT]
+        nodeArgs: ['--debug=' + DEBUG_PORT]
     });
 
     gulp.src([]).pipe(nodeInspector({

@@ -11,13 +11,13 @@ var Player = require('./Player.jsx');
 var Scoreboard = React.createClass({
     mixins: [ReactRouter.Navigation, ReactRouter.State],
     getInitialState: function () {
+        this.props.firebaseRef = new Firebase('https://shareable-scoreboard.firebaseio.com/scoreboards/' + this.getParams().id);
         return {
             players: {},
             name: ''
         };
     },
-    componentWillMount: function () {
-        this.props.firebaseRef = new Firebase('https://shareable-scoreboard.firebaseio.com/scoreboards/' + this.getParams().id);
+    componentDidMount: function () {
         this.props.firebaseRef.child('name').on('value', function (snapshot) {
             this.setState({
                 name: snapshot.val()

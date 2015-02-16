@@ -9,7 +9,7 @@ var Player = React.createClass({
             count: 0
         };
     },
-    componentWillMount: function () {
+    componentDidMount: function () {
         this.props.firebaseRef.on('value', function (snapshot) {
             var val = snapshot.val();
             if (val) {
