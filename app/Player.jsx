@@ -1,25 +1,9 @@
 /** @jsx React.DOM */
 var React = require('react');
 var ReactBootstrap = require('react-bootstrap');
+var _ = require('lodash');
 
 var Player = React.createClass({
-    getInitialState: function () {
-        return {
-            name: '',
-            count: 0
-        };
-    },
-    componentDidMount: function () {
-        this.props.firebaseRef.on('value', function (snapshot) {
-            var val = snapshot.val();
-            if (val) {
-                this.setState(val);
-            }
-        }.bind(this));
-    },
-    componentWillUnmount: function () {
-        this.props.firebaseRef.off();
-    },
     render: function () {
         return (
             <div>
@@ -30,11 +14,11 @@ var Player = React.createClass({
                 }}>
                     <ReactBootstrap.Col md={6} mdOffset={3}>
                         <span
-                            title={'Just ' + this.state.count + '? Perhaps the poor deserve their fate.'}
+                            title={'Just ' + this.props.initialState.count + '? Perhaps the poor deserve their fate.'}
                             style={{
-                                color: this.state.color,
+                                color: this.props.initialState.color,
                                 fontWeight: 'bold'
-                            }}>{this.state.count}</span>
+                            }}>{this.props.initialState.count}</span>
                     </ReactBootstrap.Col>
                 </ReactBootstrap.Row>
                 <ReactBootstrap.Row style={{
@@ -43,7 +27,7 @@ var Player = React.createClass({
                     fontSize: '1em',
                     fontWeight: 'bold'
                 }}>
-                    <div>{this.state.name}</div>
+                    <div>{this.props.initialState.name}</div>
                 </ReactBootstrap.Row>
             </div>
         );

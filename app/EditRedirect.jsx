@@ -30,12 +30,12 @@ var ScoreboardEditable = React.createClass({
                     firebaseRef.child('players').push({
                         name: 'editable player name',
                         color: _.sample(COLORS),
-                        score: 0
+                        count: 0
                     });
                     firebaseRef.child('players').push({
                         name: 'editable player name',
                         color: _.sample(COLORS),
-                        score: 0
+                        count: 0
                     });
                     firebaseRef.child('name').set('editable game name');
 

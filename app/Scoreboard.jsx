@@ -11,35 +11,21 @@ var Player = require('./Player.jsx');
 var Scoreboard = React.createClass({
     mixins: [ReactRouter.Navigation, ReactRouter.State],
     getInitialState: function () {
-        this.props.firebaseRef = new Firebase('https://shareable-scoreboard.firebaseio.com/scoreboards/' + this.getParams().id);
         return {
             players: {},
             name: ''
         };
     },
     componentDidMount: function () {
-        this.props.firebaseRef.child('name').on('value', function (snapshot) {
-            this.setState({
-                name: snapshot.val()
-            });
-        }.bind(this));
-        this.props.firebaseRef.child('players').on('child_added', function (snapshot) {
-            var playerState = this.state.players;
-            playerState[snapshot.key()] = snapshot.ref();
-            this.setState({
-                players: playerState
-            });
-        }.bind(this));
-        this.props.firebaseRef.child('players').on('child_removed', function (snapshot) {
-            var playerState = this.state.players;
-            delete playerState[snapshot.key()];
-            this.setState({
-                players: playerState
-            });
+        var firebaseRef = new Firebase('https://shareable-scoreboard.firebaseio.com/scoreboards/' + this.getParams().id);
+        firebaseRef.on('value', function (snapshot) {
+            console.log('state', snapshot.val());
+            this.setState(snapshot.val() || {});
         }.bind(this));
     },
     componentWillUnmount: function () {
-        this.props.firebaseRef.off();
+        var firebaseRef = new Firebase('https://shareable-scoreboard.firebaseio.com/scoreboards/' + this.getParams().id);
+        firebaseRef.off();
     },
     render: function () {
         return (
@@ -53,8 +39,9 @@ var Scoreboard = React.createClass({
                     <div>{this.state.name}</div>
                 </ReactBootstrap.Row>
                 {Object.keys(this.state.players).map(function (key) {
-                    var firebaseRef = this.state.players[key];
-                    return <Player key={key} firebaseRef={firebaseRef} />
+                    return <Player
+                        key={key}
+                        initialState={this.state.players[key]} />
                 }.bind(this))}
                 <ReactBootstrap.Row style={{
                     textAlign: 'center',
@@ -63,7 +50,7 @@ var Scoreboard = React.createClass({
                 }}>
                     <FacebookShare
                         href={this.makeHref('scoreboard', {
-                            id: this.props.firebaseRef.key()
+                            id: this.getParams().id
                         })}
                         title='Spread word of your impending victory throughout the land!' />
                 </ReactBootstrap.Row>
