@@ -66,34 +66,9 @@ var ScoreboardEditable = React.createClass({
                     <ContentEditable html={this.state.name} onChange={this.onChangeName} />
                 </ReactBootstrap.Row>
                 {Object.keys(this.state.players).map(function (key) {
-                    var player = this.state.players[key];
-                    var onIncrement = function () {
-                        this.props.firebase.child('players').child(key).child('count').set(this.state.players[key].count + 1);
-                    }.bind(this);
-                    var onDecrement = function () {
-                        this.props.firebase.child('players').child(key).child('count').set(this.state.players[key].count - 1);
-                    }.bind(this);
-                    var onRefresh = function () {
-                        if (window.confirm('I shall strip ' + this.state.name + ' of everything for you. Points, honor, dignity...')) {
-                            this.props.firebase.child('players').child(key).child('count').set(0);
-                        }
-                    }.bind(this);
-                    var onRemove = function () {
-                        if (window.confirm('I shall smote ' + this.state.name + ' on your command.')) {
-                            this.props.firebase.child('players').child(key).remove();
-                        }
-                    }.bind(this);
-                    var onChangeName = function (e) {
-                        this.props.firebase.child('players').child(key).child('name').set(e.target.value);
-                    }.bind(this);
-
                     return <PlayerEditable
                         key={key}
-                        onIncrement={onIncrement}
-                        onDecrement={onDecrement}
-                        onRefresh={onRefresh}
-                        onRemove={onRemove}
-                        onChangeName={onChangeName}
+                        firebase={this.props.firebase.child('players').child(key)}
                         initialState={this.state.players[key]}/>
                 }.bind(this))}
                 <ReactBootstrap.Row style={{

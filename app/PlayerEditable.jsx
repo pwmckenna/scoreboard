@@ -5,6 +5,36 @@ var ReactBootstrap = require('react-bootstrap');
 var ContentEditable = require('./ContentEditable.jsx');
 
 var PlayerEditable = React.createClass({
+    getInitialState: function () {
+        return this.props.initialState;
+    },
+    onIncrement: function () {
+        this.props.firebase.child('count').set(this.state.count + 1);
+    },
+    onDecrement: function () {
+        this.props.firebase.child('count').set(this.state.count - 1);
+    },
+    onRefresh: function () {
+        if (window.confirm('I shall strip ' + this.state.name + ' of everything for you. Points, honor, dignity...')) {
+            this.props.firebase.child('count').set(0);
+        }
+    },
+    onRemove: function () {
+        if (window.confirm('I shall smote ' + this.state.name + ' on your command.')) {
+            this.props.firebase.remove();
+        }
+    },
+    onChangeName: function (e) {
+        this.props.firebase.child('name').set(e.target.value);
+    },
+    componentDidMount: function () {
+        this.props.firebase.on('value', function (snapshot) {
+            this.setState(snapshot.val() || {});
+        }.bind(this));
+    },
+    componentWillUnmount: function () {
+        this.props.firebase.off();
+    },
     render: function () {
         return <div>
             <ReactBootstrap.Row style={{
@@ -16,17 +46,17 @@ var PlayerEditable = React.createClass({
                     <ReactBootstrap.Glyphicon
                         glyph='chevron-left'
                         title='They must be punished for their misdeeds.'
-                        onClick={this.props.onDecrement}/>
+                        onClick={this.onDecrement}/>
                     <span
-                        title={'Just ' + this.props.initialState.count + '? Perhaps the poor deserve their fate.'}
+                        title={'Just ' + this.state.count + '? Perhaps the poor deserve their fate.'}
                         style={{
-                            color: this.props.initialState.color,
+                            color: this.state.color,
                             fontWeight: 'bold'
-                        }}>{this.props.initialState.count}</span>
+                        }}>{this.state.count}</span>
                     <ReactBootstrap.Glyphicon
                         glyph='chevron-right'
                         title='Valor must be rewarded...I suppose.'
-                        onClick={this.props.onIncrement} />
+                        onClick={this.onIncrement} />
                 </ReactBootstrap.Col>
             </ReactBootstrap.Row>
             <ReactBootstrap.Row style={{
@@ -35,7 +65,7 @@ var PlayerEditable = React.createClass({
                 fontSize: '1em',
                 fontWeight: 'bold'
             }}>
-                <ContentEditable html={this.props.initialState.name} onChange={this.props.onChangeName} />
+                <ContentEditable html={this.state.name} onChange={this.onChangeName} />
             </ReactBootstrap.Row>
             <ReactBootstrap.Row style={{
                 textAlign: 'center',
@@ -46,11 +76,11 @@ var PlayerEditable = React.createClass({
                     <ReactBootstrap.Glyphicon
                         glyph='refresh'
                         title='Take from them everything. It will feel amazing...'
-                        onClick={this.props.onRefresh} />
+                        onClick={this.onRefresh} />
                     <ReactBootstrap.Glyphicon
                         glyph='remove'
                         title='Destroy them! They deserve it...'
-                        onClick={this.props.onRemove} />
+                        onClick={this.onRemove} />
                 </ReactBootstrap.Col>
             </ReactBootstrap.Row>
         </div>

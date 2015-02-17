@@ -4,6 +4,9 @@ var ReactBootstrap = require('react-bootstrap');
 var _ = require('lodash');
 
 var Player = React.createClass({
+    getInitialState: function () {
+        return this.props.initialState;
+    },
     render: function () {
         return (
             <div>
@@ -14,11 +17,11 @@ var Player = React.createClass({
                 }}>
                     <ReactBootstrap.Col md={6} mdOffset={3}>
                         <span
-                            title={'Just ' + this.props.initialState.count + '? Perhaps the poor deserve their fate.'}
+                            title={'Just ' + this.state.count + '? Perhaps the poor deserve their fate.'}
                             style={{
-                                color: this.props.initialState.color,
+                                color: this.state.color,
                                 fontWeight: 'bold'
-                            }}>{this.props.initialState.count}</span>
+                            }}>{this.state.count}</span>
                     </ReactBootstrap.Col>
                 </ReactBootstrap.Row>
                 <ReactBootstrap.Row style={{
@@ -27,7 +30,7 @@ var Player = React.createClass({
                     fontSize: '1em',
                     fontWeight: 'bold'
                 }}>
-                    <div>{this.props.initialState.name}</div>
+                    <div>{this.state.name}</div>
                 </ReactBootstrap.Row>
             </div>
         );
