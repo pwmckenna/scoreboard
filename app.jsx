@@ -1,6 +1,7 @@
 /** @jsx React.DOM */
 var React = require('react');
 
+var path = require('path');
 var _ = require('lodash');
 var q = require('q');
 var express = require('express');
@@ -9,11 +10,13 @@ var app = express();
 var Router = require('react-router');
 var routes = require('./app/routes.jsx');
 
+var dir = path.resolve(__dirname, process.env.NODE_ENV === 'production' ? 'dist' : 'build');
+app.set('views', dir);
+app.use(express.static(dir));
+
 var engine = require('ejs-locals');
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
-
-app.use(express.static(process.cwd() + '/build'));
 
 app.use(function (req, res, next) {
     q.resolve().then(function () {

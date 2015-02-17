@@ -190,7 +190,7 @@ gulp.task('default', function () {
 gulp.task('deploy', function () {
     browserifyTask({
         development: false,
-        src: './app/main.js',
+        src: './app/main.jsx',
         dest: './dist'
     });
     
