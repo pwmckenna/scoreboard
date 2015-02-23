@@ -11,7 +11,7 @@ var Router = require('react-router');
 var routes = require('./app/routes.jsx');
 
 var dir = path.resolve(__dirname, process.env.NODE_ENV === 'production' ? 'dist' : 'build');
-app.set('views', dir);
+app.use(express.static(path.resolve(__dirname, 'public')));
 app.use(express.static(dir));
 
 var engine = require('ejs-locals');
