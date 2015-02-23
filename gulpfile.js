@@ -95,6 +95,7 @@ gulp.task('default', function () {
         script: 'server.js',
         ext: 'js jsx ejs',
         env: {
+            livereload: true,
             PORT: 3000
         },
         nodeArgs: ['--debug=' + DEBUG_PORT]
