@@ -16,7 +16,7 @@ var Player = React.createClass({
                     fontSize: '10em'
                 }}>
                     <ReactBootstrap.Col md={6} mdOffset={3}>
-                        <span
+                        <span className='count'
                             title={'Just ' + this.state.count + '? Perhaps the poor deserve their fate.'}
                             style={{
                                 color: this.state.color,
@@ -30,7 +30,7 @@ var Player = React.createClass({
                     fontSize: '1em',
                     fontWeight: 'bold'
                 }}>
-                    <div>{this.state.name}</div>
+                    <div className='name'>{this.state.name}</div>
                 </ReactBootstrap.Row>
             </div>
         );
