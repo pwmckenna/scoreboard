@@ -19,7 +19,7 @@ describe('CheckboxWithLabel', function() {
             name: NAME
         }
         var player = TestUtils.renderIntoDocument(
-          <Player initialState={initialState} />
+            <Player initialState={initialState} />
         );
         expect(TestUtils.findRenderedDOMComponentWithClass(player, 'name').getDOMNode().textContent).toEqual(NAME);
         expect(TestUtils.findRenderedDOMComponentWithClass(player, 'count').getDOMNode().textContent).toEqual('' + COUNT);
