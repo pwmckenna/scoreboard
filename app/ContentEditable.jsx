@@ -4,8 +4,12 @@ var React = require('react');
 var ContentEditable = React.createClass({
     render: function () {
         return (
-            <span onInput={this.handleInput} onBlur={this.handleChange} contentEditable="true" dangerouslySetInnerHTML={{__html: this.props.html}}>
-            </span>
+            <span
+                className={this.props.className}
+                onInput={this.handleInput}
+                onBlur={this.handleChange}
+                contentEditable="true"
+                dangerouslySetInnerHTML={{__html: this.props.html}} />
         );
     },
     shouldComponentUpdate: function (nextProps) {

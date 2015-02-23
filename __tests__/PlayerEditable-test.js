@@ -1,11 +1,12 @@
 /** @jsx React.DOM */
 
-jest.dontMock('../app/Player.jsx');
+jest.dontMock('../app/PlayerEditable.jsx');
 
-describe('Player', function() {
+describe('PlayerEditable', function() {
     it('renders the initial state correctly', function() {
         var React = require('react/addons');
-        var Player = require('../app/Player.jsx');
+        var Player = require('../app/PlayerEditable.jsx');
+        var Firebase = require('firebase');
         var TestUtils = React.addons.TestUtils;
 
         var NAME = 'Jester McTesterson';
@@ -17,9 +18,10 @@ describe('Player', function() {
             color: COLOR,
             count: COUNT,
             name: NAME
-        }
+        };
+        var firebase = new Firebase('scoreboards/test/players/test');
         var player = TestUtils.renderIntoDocument(
-            <Player initialState={initialState} />
+            <Player initialState={initialState} firebase={firebase} />
         );
         expect(TestUtils.findRenderedDOMComponentWithClass(player, 'name').getDOMNode().textContent).toEqual(NAME);
         expect(TestUtils.findRenderedDOMComponentWithClass(player, 'count').getDOMNode().textContent).toEqual('' + COUNT);

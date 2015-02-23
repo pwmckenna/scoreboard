@@ -5,6 +5,14 @@ var ReactBootstrap = require('react-bootstrap');
 var ContentEditable = require('./ContentEditable.jsx');
 
 var PlayerEditable = React.createClass({
+    propTypes: {
+        initialState: React.PropTypes.shape({
+            color: React.PropTypes.string,
+            count: React.PropTypes.number,
+            name: React.PropTypes.string
+        }).isRequired,
+        firebase: React.PropTypes.object.isRequired
+    },
     getInitialState: function () {
         return this.props.initialState;
     },
@@ -47,7 +55,7 @@ var PlayerEditable = React.createClass({
                         glyph='chevron-left'
                         title='They must be punished for their misdeeds.'
                         onClick={this.onDecrement}/>
-                    <span
+                    <span className='count'
                         title={'Just ' + this.state.count + '? Perhaps the poor deserve their fate.'}
                         style={{
                             color: this.state.color,
@@ -65,7 +73,10 @@ var PlayerEditable = React.createClass({
                 fontSize: '1em',
                 fontWeight: 'bold'
             }}>
-                <ContentEditable html={this.state.name} onChange={this.onChangeName} />
+                <ContentEditable
+                    className='name'
+                    html={this.state.name}
+                    onChange={this.onChangeName} />
             </ReactBootstrap.Row>
             <ReactBootstrap.Row style={{
                 textAlign: 'center',

@@ -4,6 +4,13 @@ var ReactBootstrap = require('react-bootstrap');
 var _ = require('lodash');
 
 var Player = React.createClass({
+    propTypes: {
+        initialState: React.PropTypes.shape({
+            color: React.PropTypes.string,
+            count: React.PropTypes.number,
+            name: React.PropTypes.string
+        }).isRequired
+    },
     getInitialState: function () {
         return this.props.initialState;
     },
