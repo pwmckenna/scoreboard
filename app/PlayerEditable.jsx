@@ -52,6 +52,7 @@ var PlayerEditable = React.createClass({
             }}>
                 <ReactBootstrap.Col md={6} mdOffset={3}>
                     <ReactBootstrap.Glyphicon
+                        className='decrement'
                         glyph='chevron-left'
                         title='They must be punished for their misdeeds.'
                         onClick={this.onDecrement}/>
@@ -62,6 +63,7 @@ var PlayerEditable = React.createClass({
                             fontWeight: 'bold'
                         }}>{this.state.count}</span>
                     <ReactBootstrap.Glyphicon
+                        className='increment'
                         glyph='chevron-right'
                         title='Valor must be rewarded...I suppose.'
                         onClick={this.onIncrement} />
@@ -85,10 +87,12 @@ var PlayerEditable = React.createClass({
             }}>
                 <ReactBootstrap.Col md={6} mdOffset={3}>
                     <ReactBootstrap.Glyphicon
+                        className='refresh'
                         glyph='refresh'
                         title='Take from them everything. It will feel amazing...'
                         onClick={this.onRefresh} />
                     <ReactBootstrap.Glyphicon
+                        className='remove'
                         glyph='remove'
                         title='Destroy them! They deserve it...'
                         onClick={this.onRemove} />

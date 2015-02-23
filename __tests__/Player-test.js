@@ -17,7 +17,7 @@ describe('Player', function() {
             color: COLOR,
             count: COUNT,
             name: NAME
-        }
+        };
         var player = TestUtils.renderIntoDocument(
             <Player initialState={initialState} />
         );
