@@ -23,14 +23,10 @@ var PlayerEditable = React.createClass({
         this.props.firebase.child('count').set(this.state.count - 1);
     },
     onRefresh: function () {
-        if (window.confirm('I shall strip ' + this.state.name + ' of everything for you. Points, honor, dignity...')) {
-            this.props.firebase.child('count').set(0);
-        }
+        this.props.firebase.child('count').set(0);
     },
     onRemove: function () {
-        if (window.confirm('I shall smote ' + this.state.name + ' on your command.')) {
-            this.props.firebase.remove();
-        }
+        this.props.firebase.remove();
     },
     onChangeName: function (e) {
         this.props.firebase.child('name').set(e.target.value);

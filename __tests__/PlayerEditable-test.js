@@ -29,6 +29,8 @@ describe('PlayerEditable', function() {
         var countNode = TestUtils.findRenderedDOMComponentWithClass(player, 'count').getDOMNode();
         var decrementNode = TestUtils.findRenderedDOMComponentWithClass(player, 'decrement').getDOMNode();
         var incrementNode = TestUtils.findRenderedDOMComponentWithClass(player, 'increment').getDOMNode();
+        var refreshNode = TestUtils.findRenderedDOMComponentWithClass(player, 'refresh').getDOMNode();
+        var removeNode = TestUtils.findRenderedDOMComponentWithClass(player, 'remove').getDOMNode();
 
         expect(nameNode.textContent).toEqual(NAME);
         expect(countNode.textContent).toEqual(COUNT + '');
@@ -41,5 +43,8 @@ describe('PlayerEditable', function() {
 
         React.addons.TestUtils.Simulate.click(incrementNode);
         expect(countNode.textContent).toEqual(COUNT + 1 + '');
+
+        React.addons.TestUtils.Simulate.click(refreshNode);
+        expect(countNode.textContent).toEqual(0 + '');
     });
 });
