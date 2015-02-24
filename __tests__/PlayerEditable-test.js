@@ -10,7 +10,6 @@ var Firebase = require('mockfirebase').MockFirebase;
 
 describe('PlayerEditable', function() {
     it('renders the initial state correctly', function() {
-
         var NAME = 'Jester McTesterson';
         var COUNT = 123456;
         var COLOR = '#123456';
@@ -22,6 +21,7 @@ describe('PlayerEditable', function() {
             name: NAME
         };
         var firebase = new Firebase('https://shareable-scoreboard.firebaseio.com/scoreboards/test/players/test');
+        firebase.autoFlush();
         var player = TestUtils.renderIntoDocument(
             <Player initialState={initialState} firebase={firebase} />
         );
@@ -34,15 +34,12 @@ describe('PlayerEditable', function() {
         expect(countNode.textContent).toEqual(COUNT + '');
 
         React.addons.TestUtils.Simulate.click(decrementNode);
-        firebase.flush();
         expect(countNode.textContent).toEqual(COUNT - 1 + '');
 
         React.addons.TestUtils.Simulate.click(incrementNode);
-        firebase.flush();
         expect(countNode.textContent).toEqual(COUNT + '');
 
         React.addons.TestUtils.Simulate.click(incrementNode);
-        firebase.flush();
         expect(countNode.textContent).toEqual(COUNT + 1 + '');
     });
 });
