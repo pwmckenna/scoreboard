@@ -27,7 +27,9 @@ var Scoreboard = React.createClass({
         }
     },
     getInitialState: function () {
-        return this.props.initialState;
+        return _.defaults(this.props.initialState, {
+            players: []
+        });
     },
     componentDidMount: function () {
         this.props.firebase.on('value', function (snapshot) {

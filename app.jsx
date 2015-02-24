@@ -9,6 +9,7 @@ var app = express();
 
 var Router = require('react-router');
 var routes = require('./app/routes.jsx');
+var RouteError = require('./app/RouteError.jsx');
 
 var dir = path.resolve(__dirname, process.env.NODE_ENV === 'production' ? 'dist' : 'build');
 app.use(express.static(path.resolve(__dirname, 'public')));
@@ -32,13 +33,13 @@ app.use(function (req, res, next) {
             var props = _.extend.apply(void 0, [{}].concat(data));
             return React.renderToString(<Handler {...props} />);
         });
-    }).fail(function () {
-        return '';
+    }).fail(function (err) {
+        return React.renderToString(<RouteError err={err} />);
     }).then(function (content) {
         res.render('index', {
             content: content
         });
-    });
+    }).done();
 });
 
 module.exports = app;

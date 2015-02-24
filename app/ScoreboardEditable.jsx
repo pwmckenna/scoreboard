@@ -34,7 +34,9 @@ var ScoreboardEditable = React.createClass({
         return new Firebase('https://shareable-scoreboard.firebaseio.com/scoreboards/' + this.getParams().id);
     },
     getInitialState: function () {
-        return this.props.initialState;
+        return _.defaults(this.props.initialState, {
+            players: []
+        });
     },
     componentDidMount: function () {
         this.props.firebase.on('value', function (snapshot) {
